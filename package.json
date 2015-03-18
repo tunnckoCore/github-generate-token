@@ -1,0 +1,45 @@
+{
+  "name": "github-generate-token",
+  "version": "0.0.0",
+  "description": "Generating Github Personal Access Token using Basic Auth username:password",
+  "scripts": {
+    "lint": "jshint index.js && jscs index.js --reporter inline",
+    "test": "mocha",
+    "test-cov": "istanbul cover _mocha",
+    "test-travis": "istanbul cover _mocha --report lcovonly"
+  },
+  "author": {
+    "name": "Charlike Mike Reagent",
+    "email": "mameto_100@mail.bg",
+    "url": "https://github.com/tunnckoCore"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tunnckoCore/github-generate-token.git"
+  },
+  "keywords": [
+    "access",
+    "access-token",
+    "auth",
+    "authenticate",
+    "basic",
+    "generate",
+    "git",
+    "github",
+    "personal",
+    "token",
+    "utils"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/tunnckoCore/github-generate-token/blob/master/license.md"
+  },
+  "dependencies": {
+    "kind-of": "~1.1.0",
+    "then-got": "~1.0.5"
+  },
+  "devDependencies": {
+    "istanbul-harmony": "~0.3.1",
+    "mocha": "~2.2.1"
+  }
+}
