@@ -9,15 +9,34 @@ npm test
 ```
 
 
-## Usage
+## API
 > For more use-cases see the [tests](./test.js)
 
+## [githubGenerateToken](./index.js#L25)
+> Generate github token with Basic Auth
+
+- `username` **{String}** github username
+- `username` **{String}** github username
+- `opts` **{Object}** options like `scopes` and `note`
+- `return` **{Promise}**
+
+**Example**
 ```js
 var githubGenerateToken = require('github-generate-token');
+
+var opts = {
+  scopes: ['user', 'gist'],
+  note: 'my awesome note here'
+};
+
+githubGenerateToken('username', 'password', opts);
+.then(function(token) {
+  console.log(token);
+})
+.catch(function(err) {
+  console.error(err.message);
+});
 ```
-
-
-## API / CLI
 
 
 ## Author

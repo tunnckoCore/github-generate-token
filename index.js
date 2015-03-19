@@ -12,6 +12,34 @@ var got = require('then-got');
 
 var api = 'https://api.github.com/authorizations';
 
+/**
+ * Generate github token with Basic Auth
+ *
+ * **Example**
+ * ```js
+ * var githubGenerateToken = require('github-generate-token');
+ *
+ * var opts = {
+ *   scopes: ['user', 'gist'],
+ *   note: 'my awesome note here'
+ * };
+ *
+ * githubGenerateToken('username', 'password', opts);
+ * .then(function(token) {
+ *   console.log(token);
+ * })
+ * .catch(function(err) {
+ *   console.error(err.message);
+ * });
+ * ```
+ *
+ * @name   githubGenerateToken
+ * @param  {String} `username` github username
+ * @param  {String} `password` github password
+ * @param  {Object} `opts`     options like `scopes` and `note`
+ * @return {Promise}
+ * @api public
+ */
 module.exports = function githubGenerateToken(username, password, opts) {
   if (typeOf(username) !== 'string') {
     throw new TypeError('[github-generate-token] expect `username` be string');
