@@ -72,7 +72,10 @@ module.exports = function githubGenerateToken(username, password, opts) {
   };
 
   return got.get(api, opts).then(function _then(res) {
+    /* istanbul ignore next */
     var body = JSON.parse(res[0]);
+
+    /* istanbul ignore next */
     return body.token;
   });
 };
