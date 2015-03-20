@@ -66,7 +66,7 @@ module.exports = function githubGenerateToken(username, password, opts) {
     body: JSON.stringify(body),
     headers: {
       'authorization': 'Basic ' + new Buffer(auth).toString('base64'),
-      'user-agent': 'https://github.com/sindresorhus/got',
+      'user-agent': 'https://github.com/tunnckoCore/github-generate-token',
       'content-type': 'application/json'
     }
   };
