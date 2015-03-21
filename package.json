@@ -38,6 +38,7 @@
     "then-got": "~1.0.5"
   },
   "devDependencies": {
+    "bluebird": "^2.9.14",
     "lab": "^5.5.0"
   }
 }
