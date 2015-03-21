@@ -18,6 +18,8 @@ npm test
 - `username` **{String}** github username
 - `username` **{String}** github username
 - `opts` **{Object}** options like `scopes` and `note`
+  + `scopes` **{Array}** github oauth scopes
+  + `note` **{String}** note for the access token
 - `return` **{Promise}**
 
 **Example**

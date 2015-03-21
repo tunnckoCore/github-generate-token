@@ -4,9 +4,8 @@
   "description": "Generating Github Personal Access Token using Basic Auth username:password",
   "scripts": {
     "lint": "jshint index.js && jscs index.js --reporter inline",
-    "test": "mocha",
-    "test-cov": "istanbul cover _mocha",
-    "test-travis": "istanbul cover _mocha --report lcovonly"
+    "test": "lab test.js -cv",
+    "test-travis": "lab test.js -cv && lab test.js -r lcov -o ./coverage/lcov.info"
   },
   "author": {
     "name": "Charlike Mike Reagent",
@@ -39,7 +38,6 @@
     "then-got": "~1.0.5"
   },
   "devDependencies": {
-    "istanbul-harmony": "~0.3.1",
-    "mocha": "~2.2.1"
+    "lab": "^5.5.0"
   }
 }

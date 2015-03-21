@@ -37,6 +37,8 @@ var api = 'https://api.github.com/authorizations';
  * @param  {String} `username` github username
  * @param  {String} `password` github password
  * @param  {Object} `opts`     options like `scopes` and `note`
+ *   @option {Array} [opts] `scopes` github oauth scopes
+ *   @option {String} [opts] `note` note for the access token
  * @return {Promise}
  * @api public
  */
@@ -50,7 +52,7 @@ module.exports = function githubGenerateToken(username, password, opts) {
 
   opts = opts || {};
   if (typeOf(opts) !== 'object') {
-    throw new TypeError('[github-generate-token] expect `opts` be object if given');
+    throw new TypeError('[github-generate-token] expect `opts` be object');
   }
 
   var auth = username + ':' + password;
@@ -58,11 +60,11 @@ module.exports = function githubGenerateToken(username, password, opts) {
   opts.scopes = typeOf(opts.scopes) === 'array';
   opts.note = typeOf(opts.note) === 'string';
 
-  var body = {}
-  body.scopes = opts.scopes ? opts.scopes : ['user', 'repo', 'gist', 'public_repo'];
+  var body = {};
+  body.scopes = opts.scopes ? opts.scopes : ['user', 'repo', 'gist'];
   body.note = opts.note ? opts.note : 'tunnckoCore/github-generate-token';
 
-  var opts = {
+  opts = {
     body: JSON.stringify(body),
     headers: {
       'authorization': 'Basic ' + new Buffer(auth).toString('base64'),
