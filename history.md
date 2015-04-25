@@ -1,5 +1,10 @@
 
 
+## v1.0.4 / April 25, 2015
+- Release v1.0.4 / npm@v1.0.4
+- update tests
+- lint
+
 ## v1.0.3 / March 21, 2015
 - Release v1.0.3 / npm@v1.0.3
 - lab coverage ignore
