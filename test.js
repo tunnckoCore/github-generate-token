@@ -46,6 +46,7 @@ describe('github-generate-token:', function() {
     assert.strictEqual(typeOf(promise.then), 'function');
     assert.strictEqual(typeOf(promise.catch), 'function');
     promise.catch(function _catch(err) {
+      assert.ifError(!err);
       // work properly but fails
       // because the wrong credentials given
 
@@ -61,6 +62,7 @@ describe('github-generate-token:', function() {
     assert.strictEqual(typeOf(promise.then), 'function');
     assert.strictEqual(typeOf(promise.catch), 'function');
     promise.catch(function _catch(err) {
+      assert.ifError(!err);
       // work properly but fails
       // because the wrong credentials given
 
@@ -76,6 +78,7 @@ describe('github-generate-token:', function() {
     assert.strictEqual(typeOf(promise.then), 'function');
     assert.strictEqual(typeOf(promise.catch), 'function');
     promise.catch(function _catch(err) {
+      assert.ifError(!err);
       // work properly but fails
       // because the wrong credentials given
 
