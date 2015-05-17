@@ -26,14 +26,14 @@ var got = hybridify(require('gh-got'))
  * }
  *
  * githubGenerateToken('username:password', opts)
- * .then(console.log)
+ * .then(console.log) //=> token
  * .catch(console.error)
  * ```
  *
  * @name   githubGenerateToken
  * @param  {String}   `<credentials>` credentials pattern `username:password`
  * @param  {Object}   `[opts]` options like `scopes` and `note`
- * @param  {Function} `[callback]` node callback
+ * @param  {Function} `[callback]` node style callback
  * @return {Promise}
  * @api public
  */
