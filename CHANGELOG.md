@@ -1,5 +1,14 @@
 
 
+## 2.0.0 - 2015-05-17
+- Release v2.0.0 / npm@v2.0.0
+- add related section
+- update changelog
+- update readme/docs
+- refactor tests
+- refactor to support async callback, close [#2][issues2]
+- update - code style, apply feross/standard
+
 ## 1.0.4 - 2015-04-25
 - Release v1.0.4 / npm@v1.0.4
 - update tests
@@ -27,4 +36,4 @@
 ## 0.0.0 - 2015-03-18
 - first commits / npm@v0.0.0
 
-[issues2]: https://github.com/tunnckoCore/github-generate-token/issues/2
+[issues2]: https://github.com/tunnckoCore/github-generate-token/issues/2 "support async callback"

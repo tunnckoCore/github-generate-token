@@ -1,6 +1,6 @@
 {
   "name": "github-generate-token",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Generating github personal access token using Basic Auth `username:password`",
   "scripts": {
     "test": "standard && node test.js"
