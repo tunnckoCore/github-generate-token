@@ -40,6 +40,12 @@ githubGenerateToken('username:password', opts)
 ```
 
 
+## Related
+- [gitclone](https://github.com/tunnckoCore/gitclone): Clone a Github repository with only `username/repo`. Support CLI and Promise.
+- [gh-got](https://github.com/sindresorhus/gh-got): Convenience wrapper for `got` to interact with the GitHub API
+- [hybridify](https://github.com/hybridables/hybridify): Building hybrid APIs. You can use both callback and promise in same time.  Like `asyncFn(name, cb).then().catch()`
+
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/github-generate-token/issues/new).  
