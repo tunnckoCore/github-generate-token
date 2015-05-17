@@ -1,6 +1,6 @@
 {
   "name": "github-generate-token",
-  "version": "0.0.0",
+  "version": "1.0.4",
   "description": "Generating github personal access token using Basic Auth `username:password`",
   "scripts": {
     "test": "standard && node test.js"
@@ -14,15 +14,27 @@
     "type": "git",
     "url": "git://github.com/tunnckoCore/github-generate-token.git"
   },
-  "keywords": [],
+  "keywords": [
+    "access",
+    "access-token",
+    "auth",
+    "authenticate",
+    "basic",
+    "generate",
+    "git",
+    "github",
+    "personal",
+    "token",
+    "utils"
+  ],
   "license": {
     "type": "MIT",
     "url": "https://github.com/tunnckoCore/github-generate-token/blob/master/LICENSE.md"
   },
   "dependencies": {
-    "gh-got": "^1.0.3",
-    "hybridify": "^1.0.9",
-    "kind-of": "^1.1.0"
+    "gh-got": "~1.0.3",
+    "hybridify": "~1.0.9",
+    "kind-of": "~1.1.0"
   },
   "devDependencies": {
     "assertit": "^0.1.0"
