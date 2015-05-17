@@ -1,82 +1,84 @@
-/**
+/*!
  * github-generate-token <https://github.com/tunnckoCore/github-generate-token>
  *
  * Copyright (c) 2015 Charlike Mike Reagent, contributors.
  * Released under the MIT license.
  */
 
-'use strict';
+/* jshint asi:true */
 
-var typeOf = require('kind-of');
-var got = require('then-got');
+'use strict'
 
-var api = 'https://api.github.com/authorizations';
+var typeOf = require('kind-of')
+var hybridify = require('hybridify')
+var got = hybridify(require('gh-got'))
 
 /**
- * Generate github token with Basic Auth
+ * > Generate github token with Basic Auth
  *
  * **Example**
  * ```js
- * var githubGenerateToken = require('github-generate-token');
+ * var githubGenerateToken = require('github-generate-token')
  *
  * var opts = {
  *   scopes: ['user', 'gist'],
- *   note: 'my awesome note here'
- * };
+ *   note: 'my awesome app note'
+ * }
  *
- * githubGenerateToken('username', 'password', opts);
- * .then(function(token) {
- *   console.log(token);
- * })
- * .catch(function(err) {
- *   console.error(err.message);
- * });
+ * githubGenerateToken('username:password', opts)
+ * .then(console.log)
+ * .catch(console.error)
  * ```
  *
  * @name   githubGenerateToken
- * @param  {String} `username` github username
- * @param  {String} `password` github password
- * @param  {Object} `opts`     options like `scopes` and `note`
- *   @option {Array} [opts] `scopes` github oauth scopes
- *   @option {String} [opts] `note` note for the access token
+ * @param  {String}   `<credentials>` credentials pattern `username:password`
+ * @param  {Object}   `[opts]` options like `scopes` and `note`
+ * @param  {Function} `[callback]` node callback
  * @return {Promise}
  * @api public
  */
-module.exports = function githubGenerateToken(username, password, opts) {
-  if (typeOf(username) !== 'string') {
-    throw new TypeError('[github-generate-token] expect `username` be string');
+function githubGenerateToken (credentials, opts, callback) {
+  if (typeOf(credentials) !== 'string') {
+    throw new TypeError('[github-generate-token] expect `credentials` be string')
   }
-  if (typeOf(password) !== 'string') {
-    throw new TypeError('[github-generate-token] expect `password` be string');
+  if (credentials.indexOf(':') === -1) {
+    throw new Error('[github-generate-token] invalid `credentials` given')
+  }
+  if (!callback && typeOf(opts) === 'function') {
+    callback = opts
+    opts = {}
   }
 
-  opts = opts || {};
-  if (typeOf(opts) !== 'object') {
-    throw new TypeError('[github-generate-token] expect `opts` be object');
-  }
+  var auth = ''
+  var meta = credentials.split(':')
 
-  var auth = username + ':' + password;
+  auth = meta[0] + meta[1]
+  opts = typeOf(opts) === 'object' ? opts : {}
 
-  opts.scopes = typeOf(opts.scopes) === 'array';
-  opts.note = typeOf(opts.note) === 'string';
+  opts.scopes = typeOf(opts.scopes) === 'array'
+  opts.note = typeOf(opts.note) === 'string'
+  callback = typeOf(callback) !== 'function' ? function noop () {} : callback
 
-  var body = {};
-  body.scopes = opts.scopes ? opts.scopes : ['user', 'repo', 'gist'];
-  body.note = opts.note ? opts.note : 'tunnckoCore/github-generate-token';
+  var body = {}
+  body.scopes = opts.scopes ? opts.scopes : ['user', 'repo', 'gist']
+  body.note = opts.note ? opts.note : 'tunnckoCore/github-generate-token'
 
-  opts = {
+  return got('authorizations', {
     body: JSON.stringify(body),
     headers: {
-      'authorization': 'Basic ' + new Buffer(auth).toString('base64'),
-      'user-agent': 'https://github.com/tunnckoCore/github-generate-token',
-      'content-type': 'application/json'
+      'authorization': 'Basic ' + new Buffer(auth).toString('base64')
     }
-  };
+  }, callback)
+}
 
-  return got.get(api, opts).then(function _then(res) {
-    /* $lab:coverage:off$ */
-    var body = JSON.parse(res[0]);
-    return body.token;
-    /* $lab:coverage:on$ */
-  });
-};
+/**
+ * expose `hybridify`
+ */
+
+githubGenerateToken.hybridify = hybridify
+
+/**
+ * expose `github-generate-token`
+ */
+
+module.exports = githubGenerateToken

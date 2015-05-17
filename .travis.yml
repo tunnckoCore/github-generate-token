@@ -1,8 +1,15 @@
 sudo: false
-language: node_js
+language: "node_js"
 node_js:
   - "0.10"
   - "0.12"
   - "iojs"
-script: "npm run-script test-travis"
-after_script: "npm install coveralls && cat ./coverage/lcov.info | coveralls"
+before_script:
+  - npm install standard
+  - standard
+script:
+  - npm install istanbul
+  - istanbul cover test.js --report lcovonly
+after_script:
+  - npm install coveralls
+  - cat ./coverage/lcov.info | coveralls

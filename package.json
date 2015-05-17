@@ -1,11 +1,9 @@
 {
   "name": "github-generate-token",
-  "version": "1.0.4",
+  "version": "0.0.0",
   "description": "Generating Github Personal Access Token using Basic Auth username:password",
   "scripts": {
-    "lint": "jshint index.js && jscs index.js --reporter inline",
-    "test": "lab test.js -cv",
-    "test-travis": "lab test.js -cv && lab test.js -r lcov -o ./coverage/lcov.info"
+    "test": "standard && node test.js"
   },
   "author": {
     "name": "Charlike Mike Reagent",
@@ -16,29 +14,17 @@
     "type": "git",
     "url": "git://github.com/tunnckoCore/github-generate-token.git"
   },
-  "keywords": [
-    "access",
-    "access-token",
-    "auth",
-    "authenticate",
-    "basic",
-    "generate",
-    "git",
-    "github",
-    "personal",
-    "token",
-    "utils"
-  ],
+  "keywords": [],
   "license": {
     "type": "MIT",
-    "url": "https://github.com/tunnckoCore/github-generate-token/blob/master/license.md"
+    "url": "https://github.com/tunnckoCore/github-generate-token/blob/master/LICENSE.md"
   },
   "dependencies": {
-    "kind-of": "~1.1.0",
-    "then-got": "~1.0.5"
+    "gh-got": "^1.0.3",
+    "hybridify": "^1.0.9",
+    "kind-of": "^1.1.0"
   },
   "devDependencies": {
-    "bluebird": "^2.9.14",
-    "lab": "^5.5.0"
+    "assertit": "^0.1.0"
   }
 }

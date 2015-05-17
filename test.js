@@ -1,89 +1,91 @@
-/**
+/*!
  * github-generate-token <https://github.com/tunnckoCore/github-generate-token>
  *
  * Copyright (c) 2015 Charlike Mike Reagent, contributors.
  * Released under the MIT license.
  */
 
-'use strict';
+/* jshint asi:true */
 
-var lab = exports.lab = require('lab').script();
-var assert = require('assert');
-var typeOf = require('kind-of');
-var githubGenerateToken = require('./index');
+'use strict'
 
-var describe = lab.describe;
-var it = lab.it;
+var test = require('assertit')
+var githubGenerateToken = require('./index')
 
-describe('github-generate-token:', function() {
-  it('should throw when `username` not a string', function(done) {
-    function fixture() {
-      githubGenerateToken({one: 'two'}, '', {});
-    }
+test('should throw when `username` not a string', function (done) {
+  function fixture () {
+    githubGenerateToken({one: 'two'}, {})
+  }
 
-    assert.throws(fixture, TypeError);
-    done();
-  });
-  it('should throw when `password` not a string', function(done) {
-    function fixture() {
-      githubGenerateToken('user', {one: 'two'}, {});
-    }
+  test.throws(fixture, TypeError)
+  test.throws(fixture, /expect `credentials` be string/)
+  done()
+})
 
-    assert.throws(fixture, TypeError);
-    done();
-  });
-  it('should throw when `opts` not an object', function(done) {
-    function fixture() {
-      githubGenerateToken('user', 'pass', [1, 2, 3]);
-    }
+test('should throw when invalid `user:pass` pattern given', function (done) {
+  function fixture () {
+    githubGenerateToken('user and password')
+  }
 
-    assert.throws(fixture, TypeError);
-    done();
-  });
-  it('should work properly without options', function(done) {
-    var promise = githubGenerateToken('udasdasdasdasser', 'fdsfsdf43fvdfgdg');
+  test.throws(fixture, Error)
+  test.throws(fixture, /invalid `credentials` given/)
+  done()
+})
 
-    assert.strictEqual(typeOf(promise.then), 'function');
-    assert.strictEqual(typeOf(promise.catch), 'function');
-    promise.catch(function _catch(err) {
-      assert.ifError(!err);
-      // work properly but fails
-      // because the wrong credentials given
+test('should work properly without options', function (done) {
+  var promise = githubGenerateToken('udasdasdasdasser:fdsfsdf43fvdfgdg')
 
-      done();
-    });
-  });
-  it('should work properly with valid options given', function(done) {
-    var promise = githubGenerateToken('udasdasdasdasser', 'fdsfsdf43fvdfgdg', {
-      scopes: ['user'],
-      note: 'some test'
-    });
+  test.equal(typeof promise.then, 'function')
+  test.equal(typeof promise.catch, 'function')
+  test.equal(typeof promise.hybridify, 'function')
+  promise.catch(function _catch (err) {
+    test.ifError(!err)
+    done()
+  })
+})
 
-    assert.strictEqual(typeOf(promise.then), 'function');
-    assert.strictEqual(typeOf(promise.catch), 'function');
-    promise.catch(function _catch(err) {
-      assert.ifError(!err);
-      // work properly but fails
-      // because the wrong credentials given
+test('should work properly with valid options given', function (done) {
+  var promise = githubGenerateToken('udasdasdasdasser:fdsfsdf43fvdfgdg', {
+    scopes: ['user'],
+    note: 'some test'
+  })
 
-      done();
-    });
-  });
-  it('should normalize invalid options', function(done) {
-    var promise = githubGenerateToken('udasdasdasdasser', 'fdsfsdf43fvdfgdg', {
-      scopes: 'user',
-      note: ['some test']
-    });
+  test.equal(typeof promise.then, 'function')
+  test.equal(typeof promise.catch, 'function')
+  test.equal(typeof promise.hybridify, 'function')
+  promise.catch(function _catch (err) {
+    test.ifError(!err)
+    done()
+  })
+})
 
-    assert.strictEqual(typeOf(promise.then), 'function');
-    assert.strictEqual(typeOf(promise.catch), 'function');
-    promise.catch(function _catch(err) {
-      assert.ifError(!err);
-      // work properly but fails
-      // because the wrong credentials given
+test('should normalize invalid options', function (done) {
+  var promise = githubGenerateToken('udasdasdasdasser:fdsfsdf43fvdfgdg', {
+    scopes: 'user',
+    note: ['some test']
+  })
 
-      done();
-    });
-  });
+  test.equal(typeof promise.then, 'function')
+  test.equal(typeof promise.catch, 'function')
+  test.equal(typeof promise.hybridify, 'function')
+  promise.catch(function _catch (err) {
+    test.ifError(!err)
+    done()
+  })
+})
 
-});
+test('should be valid hybrid', function (done) {
+  var cnt = 0
+  var promise = githubGenerateToken('usernamefghkjdhfgdfg:passwordjsdgfhsdgf', function (err) {
+    test.ifError(!err)
+    cnt++
+  })
+
+  test.equal(typeof promise.hybridify, 'function')
+  test.equal(typeof githubGenerateToken.hybridify, 'function')
+  promise.catch(function _catch (err) {
+    test.ifError(!err)
+    test.equal(cnt, 1)
+    done()
+  })
+})
