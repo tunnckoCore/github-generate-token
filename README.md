@@ -1,4 +1,4 @@
-# github-generate-token [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] 
+# [github-generate-token][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] 
 
 > Generating github personal access token using Basic Auth `username:password`
 
@@ -47,7 +47,6 @@ githubGenerateToken('username:password', opts)
 
 
 ## Contributing
-
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/github-generate-token/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
 

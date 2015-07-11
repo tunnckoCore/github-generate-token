@@ -32,9 +32,9 @@
     "url": "https://github.com/tunnckoCore/github-generate-token/blob/master/LICENSE.md"
   },
   "dependencies": {
-    "gh-got": "~1.0.3",
+    "gh-got": "~1.1.0",
     "hybridify": "~1.0.9",
-    "kind-of": "~1.1.0"
+    "kind-of": "~2.0.0"
   },
   "devDependencies": {
     "assertit": "^0.1.0"
