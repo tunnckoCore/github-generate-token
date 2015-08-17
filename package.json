@@ -1,6 +1,6 @@
 {
   "name": "github-generate-token",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Generating GitHub Personal Access Token using Basic Auth `username:password`",
   "repository": "tunnckoCore/github-generate-token",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",

@@ -1,5 +1,11 @@
 
 
+## 3.0.0 - 2015-08-17
+- Release v3.0.0 / npm@v3.0.0
+- update tests and related
+- drop promise support
+- switch to use `simple-get`
+
 ## 2.0.1 - 2015-07-11
 - Release v2.0.1 / npm@v2.0.1
 - update deps
