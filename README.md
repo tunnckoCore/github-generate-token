@@ -41,6 +41,12 @@ generateToken('username:password', opts, function (err, data) {
 ```
 
 
+## Related
+- [gitclone-cli](https://github.com/tunnckocore/gitclone-cli): Git clone github repository with pattern like `user/repo#branch`
+- [github-base](https://github.com/jonschlinkert/github-base): Base methods for creating node.js apps that work with the GitHub API.
+- [simple-get](https://github.com/feross/simple-get): Simplest way to make http get requests. Supports HTTPS, redirects, gzip/deflate, streams in < 100 lines.
+
+
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/github-generate-token/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
