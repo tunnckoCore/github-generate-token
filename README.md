@@ -1,6 +1,6 @@
 # [github-generate-token][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] 
 
-> Generating github personal access token using Basic Auth `username:password`
+> Generating GitHub Personal Access Token using Basic Auth `username:password`
 
 [![code climate][codeclimate-img]][codeclimate-url] [![standard code style][standard-img]][standard-url] [![travis build status][travis-img]][travis-url] [![coverage status][coveralls-img]][coveralls-url] [![dependency status][david-img]][david-url]
 
@@ -12,38 +12,12 @@ npm test
 ```
 
 
-## API
+## Usage
 > For more use-cases see the [tests](./test.js)
 
-## [githubGenerateToken](./index.js#L40)
-> Generate github token with Basic Auth
-
-- `<credentials>` **{String}** credentials pattern `username:password`
-- `[opts]` **{Object}** options like `scopes` and `note`
-  + `scopes` **{Array}** github oauth scopes
-  + `note` **{String}** note for the access token
-- `[callback]` **{Function}** node style callback
-- `return` **{Promise}**
-
-**Example**
 ```js
 var githubGenerateToken = require('github-generate-token')
-
-var opts = {
-  scopes: ['user', 'gist'],
-  note: 'my awesome app note'
-}
-
-githubGenerateToken('username:password', opts)
-.then(console.log) //=> token
-.catch(console.error)
 ```
-
-
-## Related
-- [gitclone](https://github.com/tunnckoCore/gitclone): Clone a Github repository with only `username/repo`. Support CLI and Promise.
-- [gh-got](https://github.com/sindresorhus/gh-got): Convenience wrapper for `got` to interact with the GitHub API
-- [hybridify](https://github.com/hybridables/hybridify): Building hybrid APIs. You can use both callback and promise in same time.  Like `asyncFn(name, cb).then().catch()`
 
 
 ## Contributing
@@ -98,4 +72,4 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [freenode-img]: https://img.shields.io/badge/freenode-%23charlike-5654a4.svg
 
 [new-message-url]: https://github.com/tunnckoCore/messages
-[new-message-img]: https://img.shields.io/badge/send%20me-message-green.svg
+[new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg

@@ -10,11 +10,12 @@
 'use strict'
 
 var test = require('assertit')
-var githubGenerateToken = require('./index')
+var request = require('simple-get')
+var generate = require('./index')
 
 test('should throw when `username` not a string', function (done) {
   function fixture () {
-    githubGenerateToken({one: 'two'}, {})
+    generate({one: 'two'}, {})
   }
 
   test.throws(fixture, TypeError)
@@ -24,7 +25,7 @@ test('should throw when `username` not a string', function (done) {
 
 test('should throw when invalid `user:pass` pattern given', function (done) {
   function fixture () {
-    githubGenerateToken('user and password')
+    generate('user and password')
   }
 
   test.throws(fixture, Error)
@@ -32,60 +33,61 @@ test('should throw when invalid `user:pass` pattern given', function (done) {
   done()
 })
 
-test('should work properly without options', function (done) {
-  var promise = githubGenerateToken('udasdasdasdasser:fdsfsdf43fvdfgdg')
+test('should create token then delete it', function (done) {
+  var creds = 'fake-user123:fakeuser123'
+  var auth = new Buffer(creds).toString('base64')
 
-  test.equal(typeof promise.then, 'function')
-  test.equal(typeof promise.catch, 'function')
-  test.equal(typeof promise.hybridify, 'function')
-  promise.catch(function _catch (err) {
-    test.ifError(!err)
+  generate(creds, function (err, data) {
+    test.ifError(err)
+    request({
+      method: 'delete',
+      url: 'https://api.github.com/authorizations/' + data.id,
+      headers: {
+        'user-agent': 'tunnckoCore/github-generate-token',
+        'authorization': 'Basic ' + auth
+      }
+    }, function (err) {
+      test.ifError(err)
+      done()
+    })
+  })
+})
+
+test('should work properly without options', function (done) {
+  generate('udasdasdasdasser:fdsfsdf43fvdfgdg', function bad (err, data) {
+    test.ifError(err)
+    test.deepEqual(data, {
+      message: 'Bad credentials',
+      documentation_url: 'https://developer.github.com/v3'
+    })
     done()
   })
 })
 
 test('should work properly with valid options given', function (done) {
-  var promise = githubGenerateToken('udasdasdasdasser:fdsfsdf43fvdfgdg', {
+  generate('udasdasdasdasser:fdsfsdf43fvdfgdg', {
     scopes: ['user'],
     note: 'some test'
-  })
-
-  test.equal(typeof promise.then, 'function')
-  test.equal(typeof promise.catch, 'function')
-  test.equal(typeof promise.hybridify, 'function')
-  promise.catch(function _catch (err) {
-    test.ifError(!err)
+  }, function bad (err, data) {
+    test.ifError(err)
+    test.deepEqual(data, {
+      message: 'Bad credentials',
+      documentation_url: 'https://developer.github.com/v3'
+    })
     done()
   })
 })
 
 test('should normalize invalid options', function (done) {
-  var promise = githubGenerateToken('udasdasdasdasser:fdsfsdf43fvdfgdg', {
+  generate('udasdasdasdasser:fdsfsdf43fvdfgdg', {
     scopes: 'user',
     note: ['some test']
-  })
-
-  test.equal(typeof promise.then, 'function')
-  test.equal(typeof promise.catch, 'function')
-  test.equal(typeof promise.hybridify, 'function')
-  promise.catch(function _catch (err) {
-    test.ifError(!err)
-    done()
-  })
-})
-
-test('should be valid hybrid', function (done) {
-  var cnt = 0
-  var promise = githubGenerateToken('usernamefghkjdhfgdfg:passwordjsdgfhsdgf', function (err) {
-    test.ifError(!err)
-    cnt++
-  })
-
-  test.equal(typeof promise.hybridify, 'function')
-  test.equal(typeof githubGenerateToken.hybridify, 'function')
-  promise.catch(function _catch (err) {
-    test.ifError(!err)
-    test.equal(cnt, 1)
+  }, function bad (err, data) {
+    test.ifError(err)
+    test.deepEqual(data, {
+      message: 'Bad credentials',
+      documentation_url: 'https://developer.github.com/v3'
+    })
     done()
   })
 })

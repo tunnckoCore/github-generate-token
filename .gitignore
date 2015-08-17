@@ -54,3 +54,4 @@ Desktop.ini
 npm-debug.log
 .directory
 ._*
+lcov.info

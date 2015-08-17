@@ -10,34 +10,37 @@
 'use strict'
 
 var typeOf = require('kind-of')
-var hybridify = require('hybridify')
-var got = hybridify(require('gh-got'))
+var concat = require('concat-stream')
+var request = require('simple-get')
 
 /**
  * > Generate github token with Basic Auth
  *
  * **Example**
+ *
  * ```js
- * var githubGenerateToken = require('github-generate-token')
+ * var generateToken = require('github-generate-token')
  *
  * var opts = {
  *   scopes: ['user', 'gist'],
  *   note: 'my awesome app note'
  * }
  *
- * githubGenerateToken('username:password', opts)
- * .then(console.log) //=> token
- * .catch(console.error)
+ * generateToken('username:password', opts, function (err, data) {
+ *   if (err) return console.error(err)
+ *
+ *   console.log(data.token) //=> token
+ * })
  * ```
  *
  * @name   githubGenerateToken
  * @param  {String}   `<credentials>` credentials pattern `username:password`
  * @param  {Object}   `[opts]` options like `scopes` and `note`
- * @param  {Function} `[callback]` node style callback
- * @return {Promise}
+ * @param  {Function} `<callback>` node style callback
  * @api public
  */
-function githubGenerateToken (credentials, opts, callback) {
+
+module.exports = function githubGenerateToken (credentials, opts, callback) {
   if (typeOf(credentials) !== 'string') {
     throw new TypeError('[github-generate-token] expect `credentials` be string')
   }
@@ -48,37 +51,29 @@ function githubGenerateToken (credentials, opts, callback) {
     callback = opts
     opts = {}
   }
-
-  var auth = ''
-  var meta = credentials.split(':')
-
-  auth = meta[0] + meta[1]
   opts = typeOf(opts) === 'object' ? opts : {}
 
   opts.scopes = typeOf(opts.scopes) === 'array'
   opts.note = typeOf(opts.note) === 'string'
-  callback = typeOf(callback) !== 'function' ? function noop () {} : callback
+  callback = typeOf(callback) === 'function' ? callback : function noop () {}
 
   var body = {}
   body.scopes = opts.scopes ? opts.scopes : ['user', 'repo', 'gist']
   body.note = opts.note ? opts.note : 'tunnckoCore/github-generate-token'
 
-  return got('authorizations', {
+  request({
+    url: 'https://api.github.com/authorizations',
     body: JSON.stringify(body),
+    method: 'post',
     headers: {
-      'authorization': 'Basic ' + new Buffer(auth).toString('base64')
+      'user-agent': 'https://github.com/tunnckoCore/github-generate-token',
+      'authorization': 'Basic ' + new Buffer(credentials).toString('base64')
     }
-  }, callback)
+  }, function (err, res) {
+    if (err) return callback(err)
+
+    res.pipe(concat(function (data) {
+      callback(null, JSON.parse(data.toString()), res, data)
+    }))
+  })
 }
-
-/**
- * expose `hybridify`
- */
-
-githubGenerateToken.hybridify = hybridify
-
-/**
- * expose `github-generate-token`
- */
-
-module.exports = githubGenerateToken
